@@ -1,0 +1,42 @@
+{
+  "name": "mailing",
+  "version": "0.0.0",
+  "description": "Minimalistic boilerplate to quick-start Node.js development in TypeScript.",
+  "engines": {
+    "node": ">= 10.13 <11"
+  },
+  "devDependencies": {
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.4",
+    "jest": "~24.8.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "~1.17.0",
+    "rimraf": "^2.6.3",
+    "ts-jest": "^24.0.0",
+    "ts-node-dev": "^1.0.0-pre.39",
+    "tslint": "~5.16.0",
+    "tslint-config-prettier": "1.18.0",
+    "tslint-microsoft-contrib": "~6.1.0",
+    "tsutils": "~3.10.0",
+    "typescript": "~3.4.0"
+  },
+  "scripts": {
+    "dev": "npm-run-all -l -p dev:*",
+    "dev:api": "ts-node-dev --respawn --transpileOnly src/index.ts",
+    "dev:worker": "ts-node-dev --respawn --transpileOnly src/worker.ts",
+    "console": "ts-node-dev --respawn --transpileOnly src/repl.ts",
+    "clean": "rimraf coverage build tmp",
+    "build": "tsc -p tsconfig.release.json",
+    "build:watch": "tsc -w -p tsconfig.release.json",
+    "lint": "tslint -t stylish --project \"tsconfig.json\"",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
+  },
+  "author": "Wahyu Nugraha <nugraha.c.wahyu@gmail.com>",
+  "dependencies": {
+    "@iredium/butterfly": "^0.0.80",
+    "email-templates": "^5.1.0",
+    "repl-promised": "^0.1.0",
+    "tslib": "~1.9.3"
+  }
+}
