@@ -2,7 +2,6 @@ import { Job } from '@iredium/butterfly/lib/jobs/job'
 import EmailTemplate = require('email-templates')
 import nodemailer = require('nodemailer')
 
-
 /**
  * Send email to user.
  * @param receiver an express's request object.
@@ -35,51 +34,50 @@ export class MailJob extends Job {
   }
 
   public perform ({ data }: {data: object}, done: Function): void{
-    const path = data['path']
+    const template = data['template']
     const from = data['from']
     const to = data['to']
     const subject = data['subject']
-    const params = data['params']
+    const text = data['text']
+    const html = data['html']
+    const locals = data['locals']
     const transporter = this.transporter
 
     console.log(`sending email: ${JSON.stringify(data)}`)
 
-    if (path === undefined || path === '') {
+    if (template === undefined || template === '') {
       let mailData: {[key: string]: string} = {
-        from: from,
-        to: to,
-        subject: subject
+        from,
+        to,
+        subject,
+        text,
+        html
       }
       transporter.sendMail(mailData, (err: Error): void => {
         if (err) {
           console.log(err)
+          done(err)
         } else {
           console.log(`email sent: ${JSON.stringify(data)}`)
+          done()
         }
-        done()
       })
     } else {
-      console.log(`send with template ${path}`)
+      console.log(`send with template ${template}`)
       let email = new EmailTemplate({
         message: {
-          from: from
-        },
-        views: {
-          root: path.resolve(path.join('views/mail')),
-          options: {
-            extension: 'pug'
-          }
+          from
         },
         send: true,
         transport: transporter
       })
 
       email.send({
-        template: path,
+        template,
         message: {
-          to: to
+          to
         },
-        locals: params
+        locals
       }).then((): void => {
         console.log(`email sent: ${JSON.stringify(data)}`)
         done()
