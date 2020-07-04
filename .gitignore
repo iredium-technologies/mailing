@@ -28,6 +28,7 @@ build/
 # Misc
 .DS_Store
 .node_repl_history
+.dev
 
 # Environment
 .env
