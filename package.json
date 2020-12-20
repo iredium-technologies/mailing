@@ -19,6 +19,9 @@
   },
   "scripts": {
     "dev": "npm-run-all -l -p dev:*",
+    "start": "yarn start:api",
+    "start:api": "node ./build/src/index.js",
+    "start:worker": "node ./build/src/worker.js",
     "dev:api": "ts-node-dev --respawn --transpileOnly src/index.ts",
     "dev:worker": "ts-node-dev --respawn --transpileOnly src/worker.ts",
     "console": "ts-node-dev --respawn --transpileOnly src/repl.ts",
